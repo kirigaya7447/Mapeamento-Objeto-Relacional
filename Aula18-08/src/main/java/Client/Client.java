@@ -35,5 +35,7 @@ public class Client {
 		em.close();
 		emf.close();
 		
+		leia.close();
+		
 	}
 }

@@ -22,6 +22,10 @@ public class Produto {
 		this.categoria = categoria;
 	}
 	
+	public Produto() {
+		
+	}
+	
 
 public int getCod() {
 	return cod;
