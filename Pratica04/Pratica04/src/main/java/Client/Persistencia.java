@@ -59,19 +59,41 @@ public class Persistencia {
 
                 System.out.println("\nDados persistidos com sucesso!");
 
-                System.out.println("\nDepartamentos cadastrados:");
-                System.out.println(departamentoTI);
-                System.out.println(departamentoRH);
+                System.out.println("\nDepartamento cadastrado:");
+                System.out.println(departamento);
 
-                System.out.println("Funcionários cadastrados:");
-                System.out.println(funcionario1);
-                System.out.println(funcionario2);
-                System.out.println(funcionario3);
-                System.out.println(funcionario4);
+                System.out.println("Funcionário cadastrado:");
+                System.out.println(funcionario);
 
             } else if (opcao1 == 2) {
+            	
+            	System.out.print("Digite o id do departamento:");
+                int idDepart = leia.nextInt();
+                leia.nextLine();
 
-                System.out.println("Operação cancelada.");
+                Departamento departamento = em.find(Departamento.class, idDepart);
+
+            	System.out.print("Digite o nome do funcionário: ");
+                String nomeFunc= leia.nextLine();
+
+                Funcionario funcionario = new Funcionario(nomeFunc, departamento);
+                
+                // Mantém o relacionamento entre departamento e funcionários.
+                departamento.addFuncionario(funcionario);
+
+                // Inicia a transação.
+                em.getTransaction().begin();
+
+                // Persiste os funcionários.
+                em.persist(funcionario);
+
+                // Confirma todas as operações.
+                em.getTransaction().commit();
+
+                System.out.println("\nDados persistidos com sucesso!");
+
+                System.out.println("Funcionário cadastrado:");
+                System.out.println(funcionario);
 
             } else {
 
