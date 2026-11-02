@@ -21,6 +21,15 @@ public class SelecionarFuncionarios {
         EntityManager em = emf.createEntityManager();
 
         try {
+
+            System.out.println("O que deseja consultar?");
+            System.out.println("1 - Funcionários de um departamento");
+            System.out.println("2 - Um funcionário e o seu departamento");
+            System.out.print("Opção: ");
+            int opcao = Integer.parseInt(scanner.nextLine());
+ 
+            if (opcao == 1) {
+
             System.out.print("Digite o ID do departamento: ");
             int idDepartamento = Integer.parseInt(scanner.nextLine());
 
@@ -54,6 +63,31 @@ public class SelecionarFuncionarios {
                             + funcionario.getNome());
                 }
             }
+
+        }else if (opcao == 2) {
+ 
+                System.out.print("Digite o ID do funcionário: ");
+                int idFuncionario = Integer.parseInt(scanner.nextLine());
+ 
+                Funcionario funcionario =
+                        em.find(Funcionario.class, idFuncionario);
+ 
+                if (funcionario == null) {
+                    System.out.println("Funcionário não encontrado.");
+                    return;
+                }
+ 
+                System.out.println(
+                        "Funcionário: " + funcionario.getId() + " - "
+                        + funcionario.getNome());
+                System.out.println(
+                        "Departamento: "
+                        + funcionario.getDepartamento().getId() + " - "
+                        + funcionario.getDepartamento().getNome());
+ 
+            } else {
+                System.out.println("Opção desconhecida!");
+            }    
 
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
