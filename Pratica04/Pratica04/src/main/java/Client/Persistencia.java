@@ -11,111 +11,110 @@ import Objects.Funcionario;
 
 public class Persistencia {
 
-    public static void main(String args[]) {
+	public static void main(String args[]) {
 
-        Scanner leia = new Scanner(System.in);
+		Scanner leia = new Scanner(System.in);
 
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("pratica04");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pratica04");
 
-        EntityManager em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 
-        try {
+		try {
 
-            System.out.println("Pretende criar um novo departamento?");
-            System.out.println("1 - Sim");
-            System.out.println("2 - Não");
-            System.out.print("Opção: ");
+			System.out.println("Pretende criar um novo departamento?");
+			System.out.println("1 - Sim");
+			System.out.println("2 - Não");
+			System.out.print("Opção: ");
 
-            int opcao1 = leia.nextInt();
-            leia.nextLine();
+			int opcao1 = leia.nextInt();
+			leia.nextLine();
 
-            if (opcao1 == 1) {
+			if (opcao1 == 1) {
 
-                System.out.print("Digite o nome do departamento:");
-                String nomeDepart = leia.nextLine();
+				System.out.print("Digite o nome do departamento:");
+				String nomeDepart = leia.nextLine();
 
-                Departamento departamento = new Departamento(nomeDepart);
+				Departamento departamento = new Departamento(nomeDepart);
 
-                System.out.print("Digite o nome do funcionário: ");
-                String nomeFunc= leia.nextLine();
+				System.out.print("Digite o nome do funcionário: ");
+				String nomeFunc = leia.nextLine();
 
-                Funcionario funcionario = new Funcionario(nomeFunc, departamento);
-                
-                // Mantém o relacionamento entre departamento e funcionários.
-                departamento.addFuncionario(funcionario);
+				Funcionario funcionario = new Funcionario(nomeFunc, departamento);
 
-                // Inicia a transação.
-                em.getTransaction().begin();
+				// Mantém o relacionamento entre departamento e funcionários.
+				departamento.addFuncionario(funcionario);
 
-                // Persiste os departamentos.
-                em.persist(departamento);
+				// Inicia a transação.
+				em.getTransaction().begin();
 
-                // Persiste os funcionários.
-                em.persist(funcionario);
+				// Persiste os departamentos.
+				em.persist(departamento);
 
-                // Confirma todas as operações.
-                em.getTransaction().commit();
+				// Persiste os funcionários.
+				em.persist(funcionario);
 
-                System.out.println("\nDados persistidos com sucesso!");
+				// Confirma todas as operações.
+				em.getTransaction().commit();
 
-                System.out.println("\nDepartamento cadastrado:");
-                System.out.println(departamento);
+				System.out.println("\nDados persistidos com sucesso!");
 
-                System.out.println("Funcionário cadastrado:");
-                System.out.println(funcionario);
+				System.out.println("\nDepartamento cadastrado:");
+				System.out.println(departamento);
 
-            } else if (opcao1 == 2) {
-            	
-            	System.out.print("Digite o id do departamento:");
-                int idDepart = leia.nextInt();
-                leia.nextLine();
+				System.out.println("Funcionário cadastrado:");
+				System.out.println(funcionario);
 
-                Departamento departamento = em.find(Departamento.class, idDepart);
+			} else if (opcao1 == 2) {
 
-            	System.out.print("Digite o nome do funcionário: ");
-                String nomeFunc= leia.nextLine();
+				System.out.print("Digite o id do departamento:");
+				int idDepart = leia.nextInt();
+				leia.nextLine();
 
-                Funcionario funcionario = new Funcionario(nomeFunc, departamento);
-                
-                // Mantém o relacionamento entre departamento e funcionários.
-                departamento.addFuncionario(funcionario);
+				Departamento departamento = em.find(Departamento.class, idDepart);
 
-                // Inicia a transação.
-                em.getTransaction().begin();
+				System.out.print("Digite o nome do funcionário: ");
+				String nomeFunc = leia.nextLine();
 
-                // Persiste os funcionários.
-                em.persist(funcionario);
+				Funcionario funcionario = new Funcionario(nomeFunc, departamento);
 
-                // Confirma todas as operações.
-                em.getTransaction().commit();
+				// Mantém o relacionamento entre departamento e funcionários.
+				departamento.addFuncionario(funcionario);
 
-                System.out.println("\nDados persistidos com sucesso!");
+				// Inicia a transação.
+				em.getTransaction().begin();
 
-                System.out.println("Funcionário cadastrado:");
-                System.out.println(funcionario);
+				// Persiste os funcionários.
+				em.persist(funcionario);
 
-            } else {
+				// Confirma todas as operações.
+				em.getTransaction().commit();
 
-                System.out.println("Opção desconhecida!");
+				System.out.println("\nDados persistidos com sucesso!");
 
-            }
+				System.out.println("Funcionário cadastrado:");
+				System.out.println(funcionario);
 
-        } catch (Exception e) {
+			} else {
 
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
+				System.out.println("Opção desconhecida!");
 
-            System.err.println("Erro ao persistir os dados:");
-            e.printStackTrace();
+			}
 
-        } finally {
+		} catch (Exception e) {
 
-            em.close();
-            emf.close();
-            leia.close();
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
 
-        }
-    }
+			System.err.println("Erro ao persistir os dados:");
+			e.printStackTrace();
+
+		} finally {
+
+			em.close();
+			emf.close();
+			leia.close();
+
+		}
+	}
 }
