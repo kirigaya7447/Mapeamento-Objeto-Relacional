@@ -9,7 +9,7 @@
 		transaction-type="RESOURCE_LOCAL">
 		<properties>
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost/jpa?useSSL=false&amp;serverTimezone=UTC" />
+				value="jdbc:mysql://localhost/pratica04?useSSL=false&amp;serverTimezone=UTC" />
 
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.jdbc.Driver" />
